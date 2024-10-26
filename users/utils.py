@@ -1,7 +1,7 @@
 import telebot 
 import random
 import requests
-API_TOKEN = '7143628618:AAHHyuHEyUePzIouOyrqfcdxmBXP_AD_ZEo'
+API_TOKEN = ''
 
 
 def send_confirmation_code(chat_id):
