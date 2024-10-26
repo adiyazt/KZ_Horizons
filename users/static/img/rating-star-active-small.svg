@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" width="29" height="29">
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: #f3c329 } 
+	</style>
+	<path id="icn_star_filled" class="shp0" d="M14.68,23.43l8.58,5.5l-2.28,-10.37l7.58,-6.98l-9.98,-0.9l-3.9,-9.78l-3.9,9.78l-9.98,0.9l7.58,6.98l-2.28,10.37z" />
+</svg>

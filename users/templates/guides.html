@@ -1,0 +1,67 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+
+{% block links %}
+
+<link rel="stylesheet" href="{% static 'styles/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="excursions-container">
+    <div class="container">
+<h2>Все гиды</h2>
+<ul class="excursions-list excursions-list-main rating-large" id="excursions-list">
+    {% for guide in guides %}
+    <li class="excursions-list-item">
+        <a href="{% url 'guide' guide.0.id %}" class="excursions-item flex direction-column">
+            <div class="flex excursions-head" style="background-image: url('{% static guide.0.photo %}'); background-size: 100% 100%">
+
+            </div>
+
+            <div class="flex j-c-space-between direction-column">
+                <div class="excursions-title">
+                    <span class="excursions-name">{{ guide.0.full_name }}</span>
+                    <span class="excursions-location">{{ guide.0.info }}</span>
+                </div>
+
+                <div class="excursions-footer">
+             
+    <div class="excursions-rate rating-large">
+    <div class="rating-stars">
+    <div class="rating-content">
+        <div class="rating-stars-disabled">
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+        </div>
+        <div class="rating-stars-active" style="width: {{ guide.1 }}%">
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+        </div>
+    </div>
+
+            
+    </div>                        
+    
+                        <span class="rating-count">
+                            <span class="nowrap">({{ guide.2 }} отзывов)</span>
+                        </span>
+                        
+                    </div>
+                    
+                </div>
+
+            </div>
+
+
+        </a>
+    </li>
+    {% endfor %}
+
+</ul>
+{% endblock %}

@@ -1,0 +1,100 @@
+
+{% extends "layout/basic.html" %}
+{% load static %}
+
+{% block header %}
+{% endblock %}
+
+{% block links %}
+<link rel="stylesheet" href="{% static 'styles/css/login.css' %}">
+{% endblock %}
+   
+{% block content %}
+
+<div style="height: 150vh;">
+<div class="form-container11">
+
+   <form action="{% url 'api_register' %}" method="post">
+      <h3>Register now</h3>
+      <input type="text" name="name" required placeholder="Имя Фамилия">
+      <input type="text" name="phone" required placeholder="Номер телефона">
+      <input type="email" name="email" required placeholder="Email">
+      <input type="password" name="password" required placeholder="Пароль">
+      <input type="password" name="cpassword" required placeholder="Подтвердите пароль">
+      <select name="status">
+         <option value="guide">Гид</option>
+         <option value="client">Клиент</option>
+      </select>
+      <h4>Please start chat with the <a href="https://t.me/KZHorizons_bot">telegram bot</a>.</h4>
+      <label for="chat_id">Enter an id that was sent to get code:</label> <br>
+      <input type="text" name="chat_id" id="chat_id" required placeholder="Код">
+      <button type="button" id="get_code">Get code</button>
+      <input type="text" id="telegram" disabled>
+      <input type="submit" name="submit" id="submit" value="Зарегистироваться" class="form-btn" style="display: none;">
+      <p>Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
+      {% csrf_token %}
+   </form>
+</div>
+</div>
+
+
+<script>
+    get_code = document.getElementById('get_code');
+    console.log('111')
+    document.addEventListener('DOMContentLoaded', function() {
+        get_code.addEventListener('click', function(e) {
+            var name = document.getElementsByName('name')[0].value;
+            var phone = document.getElementsByName('phone')[0].value;
+            var email = document.getElementsByName('email')[0].value;
+            var password = document.getElementsByName('password')[0].value;
+            var cpassword = document.getElementsByName('cpassword')[0].value;
+            var user_type = document.getElementsByName('status')[0].value;
+            var chat_id = document.getElementById('chat_id').value;
+            var submit = document.getElementById('submit');
+    
+            if (name && phone && email && password && cpassword && user_type && chat_id) {
+                var info = {
+                    'chat_id': chat_id
+                };
+    
+                fetch('/users/get_code/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify(info)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    var telegram = document.getElementById('telegram');
+                    telegram.innerText = data.message;
+                    telegram.disabled= false;
+                    submit.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+        });
+    });
+    
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    </script>
+
+{% endblock %}
+ 

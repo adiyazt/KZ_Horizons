@@ -1,0 +1,263 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+
+
+{% block links %}
+
+<link rel="stylesheet" href="{% static 'styles/index.css' %}">
+{% endblock %}
+
+    
+
+
+{% block content %}
+
+<style>
+
+    h3 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    label {
+        width: 100px;
+        font-weight: bold;
+        color: #555;
+    }
+
+    input[type="text"] {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+        align-self: flex-end;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    .disabled {
+        background-color: #e9e9e9;
+        color: #a9a9a9;
+        cursor: not-allowed;
+    }
+</style>
+
+
+<script>
+    function redirectToDownload(excursionId) {
+        var url = "{% url 'download_booking' 0 %}".replace('0', excursionId);
+        window.location.href = url;
+    }
+    
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<div class="wrapper">
+    <div class="excursions-container">
+        <div class="container">
+            <div style="display: flex; align-items: center; justify-content: space-between">
+                <h3 style="margin-right: 10px;">Ваш аккаунт</h3>
+                <a href="{% url 'deauth' %}">Выйти с аккаунта</a>
+            </div>
+    <form action="" method="POST" enctype="multipart/form-data">
+        <label for="files" class="btn" style="width: 150px; height: 40px">Изменить аватарку</label>
+        <div class="flex" style="background-image: url('{% static photo %}'); background-size: 100% 100%; height: 100px; width: 100px; border-radius: 100%"></div>
+        <input id='files' type="file" name="photo" style="visibility:hidden; height: 0px"> <br>
+        <label for="full_name">Full name: </label>
+        <input type="text" name="full_name" value="{{ full_name }}">
+        <label for="email">Email: </label>
+        <input type="text" name="email" value="{{ email }}">
+        <label for="phone">Phone: </label>
+        <input type="text" name="phone" value="{{ phone }}">
+        <label for="info">Info: </label>
+        <input type="text" name="info" value="{{ info }}">
+        <label for="rating">Rating: </label>
+        <input type="text" name="rating" value="{{ rating }}({{ rating_number }})" disabled><br>
+        <input type="submit" value="Сохранить изменения">
+        {% csrf_token %}
+    </form>
+
+    {% if client %}
+    <h3>Бронирования</h3>
+    <ul class="excursions-list excursions-list-main rating-large" id="excursions-list">
+                    
+    
+        {% for excursion in excursions %}
+        <li class="excursions-list-item">
+            <div  class="excursions-item flex direction-column">
+            <a href="{% url 'excursion' excursion.id %}">
+                <div class="flex excursions-head" style="background-image: url('{% static excursion.photo %}'); background-size: 100% 100%"></div>
+            </a>
+                <div class="flex j-c-space-between direction-column">
+                    <div class="excursions-title direction-column">
+                        <span class="excursions-name">{{ excursion.name }}</span>
+                        <span class="excursions-location">{{ excursion.city.name }}</span>
+                    </div>
+    
+                    <div class="excursions-footer">
+                        <button class="btn btn-hashtag btn-big" onclick="redirectToDownload('{{ excursion.id }}')">Скачать файл с информацией</button>
+                    </div>                           
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+        </ul>
+
+
+        <h3>Прошедшие экскурсии</h3>
+    <ul class="excursions-list excursions-list-main rating-large" id="excursions-list">
+                    
+    
+        {% for excursion in prev_excs %}
+        <li class="excursions-list-item">
+            <div  class="excursions-item flex direction-column">
+            <a href="{% url 'excursion' excursion.id %}">
+                <div class="flex excursions-head" style="background-image: url('{% static excursion.photo %}'); background-size: 100% 100%"></div>
+            </a>
+                <div class="flex j-c-space-between direction-column">
+                    <div class="excursions-title direction-column">
+                        <span class="excursions-name">{{ excursion.name }}</span>
+                        <span class="excursions-location">{{ excursion.city.name }}</span>
+                    </div>
+                              
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+
+
+    
+    
+        </ul>
+                    
+                </div>
+    {% endif %}
+
+    {% if not client %}
+    <h2>Активные экскурсии <a href="{% url 'add_excursion' %}">(Создать новую)</a></h2>
+
+    
+<ul class="excursions-list excursions-list-main rating-large" id="excursions-list">
+    {% for excursion in excursions %}
+    <li class="excursions-list-item">
+        <a href="{% url 'excursion' excursion.0.id %}" class="excursions-item flex direction-column">
+            <div class="flex excursions-head" style="background-image: url('{% static excursion.0.photo %}'); background-size: 100% 100%">
+
+                <div class="w100">
+
+                    <div class="left-pallet">
+                        <span class="excursions-price">{{ excursion.0.price }}&euro; за человека</span>                          
+                    </div>            
+                </div>
+            </div>
+
+            <div class="flex j-c-space-between direction-column">
+                <div class="excursions-title">
+                    <span class="excursions-name">{{ excursion.0.name }}</span>
+                    <span class="excursions-location">{{ excursion.0.city.name }}</span>
+                </div>
+
+                <div class="excursions-footer">
+                    <div class="excursions-type c-yellow">{{ excursion.0.type }} экскурсия / {{ excursion.0.time }} ч</div>
+             
+    <div class="excursions-rate rating-large">
+    <div class="rating-stars">
+    <div class="rating-content">
+        <div class="rating-stars-disabled">
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+        </div>
+        <div class="rating-stars-active" style="width: {{ excursion.1 }}%">
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+        </div>
+    </div>
+
+            
+    </div>                        
+    
+                        <span class="rating-count">
+                            <span class="nowrap">({{ excursion.2 }} бронирований)</span>
+                        </span>
+                        
+                    </div>
+                    
+                </div>
+
+            </div>
+
+
+        </a>
+    </li>
+    {% endfor %}
+
+</ul>
+
+
+<h2>Прошедшие экскурсии</h2>
+
+    
+<ul class="excursions-list excursions-list-main rating-large" id="excursions-list">
+    {% for excursion in excursions_past %}
+    <li class="excursions-list-item">
+        <a href="{% url 'excursion' excursion.id %}" class="excursions-item flex direction-column">
+            <div class="flex excursions-head" style="background-image: url('{% static excursion.photo %}'); background-size: 100% 100%">
+
+                <div class="w100">
+
+                    <div class="left-pallet">
+                        <span class="excursions-price">{{ excursion.price }}&euro; за человека</span>                          
+                    </div>            
+                </div>
+            </div>
+
+            <div class="flex j-c-space-between direction-column">
+                <div class="excursions-title">
+                    <span class="excursions-name">{{ excursion.name }}</span>
+                    <span class="excursions-location">{{ excursion.city.name }}</span>
+                </div>
+
+            </div>
+
+
+        </a>
+    </li>
+    {% endfor %}
+
+</ul>
+
+    {% endif %}
+</div></div></div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+
+{% block content %}
+<section class="form-container">
+    <h2>Регистрация\Авторизация</h2>
+    <form method="POST" class="styled-form">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        
+        {{ form.as_p }}
+        
+        <div class="form-actions">
+            <button class="js-captcha-refresh">Обновить</button>
+            <input type="submit" value="Готово">
+        </div>
+    </form>
+</section>
+
+<style>
+    .form-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .styled-form p {
+        margin-bottom: 15px;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .form-actions button,
+    .form-actions input[type="submit"] {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .form-actions button {
+        background: #667c4f;
+        color: #fff;
+    }
+
+    .form-actions input[type="submit"] {
+        background: #667c4f;
+        color: #fff;
+    }
+
+    .form-actions button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+</style>
+{% endblock %}

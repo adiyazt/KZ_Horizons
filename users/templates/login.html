@@ -1,0 +1,32 @@
+
+{% extends "layout/basic.html" %}
+{% load static %}
+
+{% block header %}
+{% endblock %}
+
+
+{% block links %}
+   <link rel="stylesheet" href="{% static 'styles/css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="wrapper">
+<div style="height: 130vh;">
+<div class="form-container11">
+
+   <form action="{% url 'api_login' %}" method="post">
+      <h3>Вход</h3>
+      
+      <input type="email" name="email" required placeholder="Email">
+      <input type="password" name="password" required placeholder="Пароль">
+      <input type="submit" name="submit" value="Зайти" class="form-btn">
+      <p>Нет аккаунта? <a href="{% url 'register' %}">Зарегестрироваться</a></p>
+
+      {% csrf_token %}
+   </form>
+</div>
+</div>
+</div>
+{% endblock %}

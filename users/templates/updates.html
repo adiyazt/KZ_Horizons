@@ -1,0 +1,124 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+
+{% block links %}
+<link rel="stylesheet" href="{% static 'styles/css/updates.css' %}">
+<link rel="stylesheet" href="{% static 'styles/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const writeReviewBtns = document.querySelectorAll('.writeReviewBtn');
+    const closeModalBtns = document.querySelectorAll('.close');
+    const modals = document.querySelectorAll('.modal');
+
+    writeReviewBtns.forEach(btn => {
+        btn.addEventListener('click', function(event) {
+            event.preventDefault();
+            const modal = this.nextElementSibling;
+            modal.style.display = 'block';
+        });
+    });
+
+    closeModalBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const modal = this.closest('.modal');
+            modal.style.display = 'none';
+        });
+    });
+
+    window.addEventListener('click', function(event) {
+        modals.forEach(modal => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    });
+
+    const ratingStarsActive = document.querySelectorAll('.rating-stars-active');
+    const ratingStarsDisabled = document.querySelectorAll('.rating-stars-disabled');
+    const ratingInputs = document.querySelectorAll('.ratingInput');
+
+    ratingStarsDisabled.forEach((starsDisabled, starsIndex) => {
+        const stars = starsDisabled.querySelectorAll('.rating-star');
+        stars.forEach((star, index) => {
+            star.addEventListener('click', () => {
+                const ratingValue = index + 1;
+                const activeStars = ratingStarsActive[starsIndex];
+                activeStars.style.width = `${ratingValue * 20}%`;
+                ratingInputs[starsIndex].value = ratingValue;
+
+                for (let i = 0; i < 5; i++) {
+                    const activeStar = activeStars.children[i];
+                    if (i < ratingValue) {
+                        activeStar.style.backgroundImage = "url('{% static 'img/rating-star-active-small.svg' %}')";
+                    } else {
+                        activeStar.style.backgroundImage = "url('{% static 'img/rating-star-disabled-small.svg' %}')";
+                    }
+                }
+            });
+        });
+    });
+});
+</script>
+
+<ul class="excursions-list excursions-list-main rating-large" id="excursions-list" style="margin-top: 20px">
+    {% for update in updates %}
+    
+    <li class="excursions-list-item">
+        {% if update.0.is_review %}
+        <a href="#" class="excursions-item flex direction-column">
+        <button class="writeReviewBtn">Write a review</button>
+            
+<div id="reviewModal{{ update.1.id }}" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Write a Review to the Guide!</h2>
+        <form id="reviewForm{{ update.1.id }}" action="{% url 'review' update.1.id %}" method="post">
+            {% csrf_token %}
+            <div class="rating-content">
+                <div class="rating-stars-disabled">
+                    <div class="rating-star"></div>
+                    <div class="rating-star"></div>
+                    <div class="rating-star"></div>
+                    <div class="rating-star"></div>
+                    <div class="rating-star"></div>
+                </div>
+                <div class="rating-stars-active" style="width: 0;">
+                    <div class="rating-star"></div>
+                    <div class="rating-star"></div>
+                    <div class="rating-star"></div>
+                    <div class="rating-star"></div>
+                    <div class="rating-star"></div>
+                </div>
+            </div>
+            <input type="hidden" name="rating" class="ratingInput" id="ratingInput{{ update.1.id }}">
+            <input type="hidden" name="update" value="{{ update.0.id }}">
+            <textarea name="review" rows="5" placeholder="Write your review here..."></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+        {% else %}
+        <a href="{% url 'excursion' update.1.id %}" class="excursions-item flex direction-column">
+        {% endif %}
+            <div class="flex excursions-head" style="background-image: url('{% static update.1.photo %}'); background-size: 100% 100%">
+            </div>
+
+            <div class="flex j-c-space-between direction-column">
+                <div class="excursions-title">
+                    <span class="excursions-name">{{ update.1.name }}</span>
+                    <span class="excursions-location">{{ update.1.city.name }}</span>
+                </div>
+
+                <div class="excursions-footer">
+                    <p><b>{{ update.0.header }}: </b>{{ update.0.text }}</p>
+                    <p style="color: grey;">{{ update.0.datetime }}</p>
+                </div>
+            </div>
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

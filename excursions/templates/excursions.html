@@ -1,0 +1,137 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+{% block links %}
+
+<link rel="stylesheet" href="{% static 'styles/index.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .search-form-container {
+        margin-bottom: 50px;
+        border: 1px solid black;
+        background-image: url('{% static 'img/images/background2.jpg' %}');
+    }
+</style>
+
+<div class="search-form-container">
+    <div class="container">
+
+    <form action="" class="search flex" method="POST">
+    <div>
+    <div class="flex">
+
+        <label class="form-label search-city">
+            <select name="city" id="city" class="form-control form-control-big control-block chosen-search-show">
+                <option value="" disabled selected>Город отправления</option>
+                {% for city in cities %}
+                <option value="{{ city.id }}">{{ city.name }}</option>
+                {% endfor %}
+            </select>
+        </label>
+
+        <label class="search-direction">
+            <select name="exc_kind" id="direction_name" class="form-control form-control-big control-block chosen-search-show">
+                <option value="" disabled selected>Вид туризма</option>
+                {% for exc_kind in exc_kinds %}
+                <option value="{{ exc_kind.1 }}">{{ exc_kind.1 }}</option>
+                {% endfor %}
+            </select>
+        </label>
+
+        <label class="form-label search-type">
+            <select name="exc_type" id="type" class="form-control form-control-big control-block chosen">
+                <option value="" disabled selected>Тип туризма</option>
+                {% for exc_type in exc_types %}
+                <option value="{{ exc_type.1 }}">{{ exc_type.1 }}</option>
+                {% endfor %}
+            </select>
+        </label>
+
+        <label class="form-label search-from">
+            <input type="date" name="date_from" id="date_from" class="form-control form-control-big datepicker-e">
+        </label>
+
+        <label class="form-label search-to">
+            <input type="date" id="date_to" name="date_to" class="form-control form-control-big datepicker-e">
+        </label>
+
+    </div>
+    </div>
+
+        <div class="search-btn">
+            <input type="submit" value="Найти" class="btn btn-big btn-red btn-block">
+        </div>
+
+        {% csrf_token %}
+
+    </form>
+</div>
+</div>
+
+<div class="excursions-container">
+    <div class="container">
+<h2>Все экскурсии</h2>
+<ul class="excursions-list excursions-list-main rating-large" id="excursions-list">
+    {% for excursion in excursions %}
+    <li class="excursions-list-item">
+        <a href="{% url 'excursion' excursion.0.id %}" class="excursions-item flex direction-column">
+            <div class="flex excursions-head" style="background-image: url('{% static excursion.0.photo %}'); background-size: 100% 100%">
+
+                <div class="w100">
+
+                    <div class="left-pallet">
+                        <span class="excursions-price">{{ excursion.0.price }}&euro; за человека</span>                          
+                    </div>            
+                </div>
+            </div>
+
+            <div class="flex j-c-space-between direction-column">
+                <div class="excursions-title">
+                    <span class="excursions-name">{{ excursion.0.name }}</span>
+                    <span class="excursions-location">{{ excursion.0.city.name }}</span>
+                </div>
+
+                <div class="excursions-footer">
+                    <div class="excursions-type c-yellow">{{ excursion.0.type }} экскурсия / {{ excursion.0.time }} ч</div>
+             
+    <div class="excursions-rate rating-large">
+    <div class="rating-stars">
+    <div class="rating-content">
+        <div class="rating-stars-disabled">
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+        </div>
+        <div class="rating-stars-active" style="width: {{ excursion.1 }}%">
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+            <div class="rating-star"></div>
+        </div>
+    </div>
+
+            
+    </div>                        
+    
+                        <span class="rating-count">
+                            <span class="nowrap">({{ excursion.2 }} бронирований)</span>
+                        </span>
+                        
+                    </div>
+                    
+                </div>
+
+            </div>
+
+
+        </a>
+    </li>
+    {% endfor %}
+
+</ul>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}KZ Horizons{% endblock %}</title>
+    <link href="css?family=PT+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'styles/css/headfooter.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+    {% block links %}{% endblock %}
+</head>
+<body style="padding-top: 73px;">
+    {% block header %}
+    <header id="header" class="flex j-c-space-between a-i-center">
+        <div class="navigation">
+            <nav id="navigation">
+                <ul class="flex j-c-flex-end a-i-center f-w-wrap">
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="{% url 'updates' %}">Обновления</a></li>
+                    <li><a href="{% url 'cities' %}">Города</a></li>
+                    <li><a href="{% url 'excursions' %}">Экскурсии</a></li>
+                    <li><a href="{% url 'attractions' %}">Достопримечательности</a></li>
+                    <li><a href="{% url 'guides' %}">Гиды</a></li>
+                    {% block auth %}
+    {% if auth %}
+        <li><a href="{% url 'profile' %}">Профиль</a></li>
+    {% else %}
+        <li><a href="{% url 'login' %}">Войти</a></li>
+    {% endif %}
+    {% endblock %}
+                                </ul>
+            </nav>
+    
+    
+    </header>
+    {% endblock %}
+    <section>
+        {% block content %}
+        {% endblock %}
+    </section>
+    {% block footer %}
+    <footer id="footer">
+        <div class="container">
+            <div class="flex j-c-space-between">
+                <div class="flex-item">
+                    <a href="#" class="footer-logo">KZ Horizons</a>
+                    <p>
+                        <p>Adiya</p>
+    
+                        <p>phone number:</p>
+    
+                        <p>e-mail: </p>
+                    
+                </div>
+                <div class="flex-item flex-item-4">
+                    <p>
+                        Уникальные экскурсии на русском языке по Казахстану от проверенных гидов. KZ Horizons - это
+                        лучшие развлечения, отдых и экскурсии из Алматы, Астаны и других городов Казахстана.
+                    </p>
+                </div>
+                <div class="flex-item">
+                    <nav>
+                        <ul>
+                            <li><a href="">Гидам</a></li>
+                            <li><a href="">Партнерам</a></li>
+                            <li><a href="">Условия</a></li>
+                            <li><a href="">Пользовательское соглашение</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <div class="container">
+                Horizons of Kazakhstan, 2024
+    
+                <div class="pull-right">Developed by Adiya</div>
+            </div>
+        </div>
+    </footer>
+    {% endblock %}
+</body>
+</html>

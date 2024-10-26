@@ -1,0 +1,137 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+
+{% block links %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+        h3 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+    
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: auto;
+        }
+    
+        label {
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+        }
+    
+        input[type="text"],
+        input[type="datetime-local"],
+        input[type="file"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+    
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    .disabled {
+        background-color: #e9e9e9;
+        color: #a9a9a9;
+        cursor: not-allowed;
+    }
+</style>
+<div class="excursions-container">
+    <div class="container">
+<h1>Add an excursion</h1>
+<form action="" method="post" enctype="multipart/form-data">
+
+    <label for="name">Name:</label>
+    <input type="text" name="name"> <br>
+
+    <label for="info">Description:</label>
+    <textarea name="info" cols="30" rows="10"></textarea> <br>
+
+    <label for="kind">Kind:</label>
+    <select name="kind">
+        <option value="" disabled selected>Вид туризма</option>
+        {% for exc_kind in exc_kinds %}
+        <option value="{{ exc_kind.1 }}">{{ exc_kind.1 }}</option>
+        {% endfor %}
+    </select> <br>
+
+    <label for="type">Type:</label>
+    <select name="type">
+        <option value="" disabled selected>Тип туризма</option>
+        {% for exc_type in exc_types %}
+        <option value="{{ exc_type.1 }}">{{ exc_type.1 }}</option>
+        {% endfor %}
+    </select> <br>
+
+    <label for="people_number"> People number:</label>
+    <input type="text" name="people_number"> <br>
+
+    <label for="time">Duration(in hours):</label>
+    <input type="text" name="time"> <br>
+
+    <label for="city">City:</label>
+    <select name="city">
+        <option value="" disabled selected>Город</option>
+        {% for city in cities %}
+        <option value="{{ city.id }}">{{ city.name }}</option>
+        {% endfor %}
+    </select><br>
+
+    <label for="transport">Transport:</label>
+    <select name="transport">
+        <option value="" disabled selected>Транспорт</option>
+        {% for trans in transport %}
+        <option value="{{ trans.1 }}">{{ trans.1 }}</option>
+        {% endfor %}
+    </select><br>
+
+    <label for="price">Price(in euro):</label>
+    <input type="text" name="price"> <br>
+
+    <label for="date">Date:</label>
+    <input type="datetime-local" name="date" id="date">
+
+    <label for="program">Program:</label>
+    <textarea name="program"cols="30" rows="10"></textarea><br>
+
+    <input type="text" name="guide" hidden value="{{guide_id}}">
+
+    <label for="photo">Photo:</label>
+    <input type="file" name="photo"> <br>
+
+    <input type="submit" value="Add">
+    
+    {% csrf_token %}
+</form>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+
+{% block links %}
+
+<link rel="stylesheet" href="{% static 'styles/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="excursions-container">
+    <div class="container">
+        <h2>Все города</h2>
+<ul class="excursions-list excursions-list-main rating-large" id="excursions-list">
+    {% for city in cities %}
+    <li class="excursions-list-item" style="height: 400px;">
+        <a href="{% url 'city' city.id %}" class="excursions-item flex direction-column">
+            <div class="flex excursions-head" style="background-image: url('{% static city.photo %}'); background-size: 100% 100%">
+            </div>
+
+            <div class="flex j-c-space-between direction-column">
+                <div class="excursions-title">
+                    <span class="excursions-name">{{ city.name }}</span>
+                    <span class="excursions-location">{{ city.region }}</span>
+                </div>
+            </div>
+
+            <div class="excursions-footer"><p>{{ city.info }}</p></div>
+
+
+        </a>
+    </li>
+    {% endfor %}
+
+</ul>
+</div></div>
+{% endblock %}

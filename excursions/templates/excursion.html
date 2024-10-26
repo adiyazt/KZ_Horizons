@@ -1,0 +1,104 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+
+{% block links %}
+
+<link rel="stylesheet" href="{% static 'styles/index.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<style>
+    
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+</style>
+
+
+
+
+<div class="excursions-container">
+    <div class="container">
+
+<h2>{{ excursion.name }}</h2>
+<div style="background-image: url('{% static excursion.photo %}'); background-size: cover; background-repeat: no-repeat; width: 200px; height:100px"></div>
+<p><b>Info:</b> {{ excursion.info }}</p>    
+<p><b>Type:</b> {{ excursion.type }}</p> 
+<p><b>Kind:</b> {{ excursion.kind }}</p> 
+<p><b>Attractions:</b> </p> 
+<div class="flex-title flex j-c-space-between a-i-center">
+{% for attraction in attractions %}
+    <a class="btn btn-hashtag btn-big" href="{% url 'attraction' attraction.id %}"> {{ attraction.name }} </a>
+{% endfor %}
+</div>
+<p><b>People number:</b> {{ excursion.people_number }}</p> 
+<p><b>Duration:</b> {{ excursion.time }}</p> 
+<p><b>City:</b> {{ excursion.city.name }}</p> 
+<p><b>Guide:</b> <a href="{% url 'guide' guide.pk %}">{{ guide.full_name }}</a></p>   
+<p><b>Transport:</b> {{ excursion.transport }}</p> 
+<p><b>Program:</b> {{ excursion.program }}</p> 
+<p><b>Date:</b> {{ excursion.datetime }}</p>     
+<p><b>Price:</b> {{ excursion.price }}</p>    
+
+{% if not is_guide %}
+{% if excursion.is_available %}
+{% if not excursion.is_past %}
+    <a class="btn btn-hashtag btn-big" href="{% url 'book' excursion.id %}">Забронировать </a>
+{% endif %}
+{% endif %}
+{% else %}
+<h2>Зарегистрированные клиенты:</h2>
+<ol>
+    {% for booking in bookings %}
+    <li><p>{{ booking.user.full_name }}</p></li>
+    {% endfor %}
+</ol>
+
+<h3>Отпраить клиентам обновлеие по экскурсии</h3>
+<form action="{% url 'send_update' excursion.id %}" method="post" style="margin-bottom: 20px;">
+    <label for="header">Заголовок:</label>
+    <input type="text" name="header" style="height: 30px;">
+    <label for="text">Текст:</label>
+    <input type="text" name="text" style="height: 30px;">
+    <input type="submit" value="Отправить обновление" class="btn btn-hashtag btn-big" style="height: 35px; margin-left: 20px">
+    {% csrf_token %}
+</form>
+
+{% endif %}
+{% endblock %}

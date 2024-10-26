@@ -1,0 +1,36 @@
+.flex {
+    display: -webkit-flex!important;
+}
+
+.direction-column {
+    flex-direction: column
+}
+
+.j-c-space-between {
+    justify-content: space-between
+}
+
+.a-i-center {
+    align-items: center
+}
+
+/* популярные города */
+.flex-item {
+    flex: 1
+}
+
+.flex-item-2 {
+    flex: 2
+}
+
+.flex-item-3 {
+    flex: 3
+}
+
+.cities,.navigation ul,.profile-nav ul,footer nav ul,ul {
+    list-style: none
+}
+
+body{
+    padding-top: 80px;
+}

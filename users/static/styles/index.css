@@ -1,0 +1,479 @@
+/* списки */
+.cities,.navigation ul,.profile-nav ul,footer nav ul,ul {
+    list-style: none
+}
+
+/* надпись */
+h1 {
+    font-size: 4.28571429rem;
+    color: #fff
+}
+
+/* настройки дивов */
+.flex {
+    display: -webkit-flex!important;
+}
+
+.direction-column {
+    flex-direction: column
+}
+
+.j-c-space-between {
+    justify-content: space-between
+}
+
+.a-i-center {
+    align-items: center
+}
+
+/* популярные города */
+.flex-item {
+    flex: 1
+}
+
+.flex-item-2 {
+    flex: 2
+}
+
+.flex-item-3 {
+    flex: 3
+}
+
+
+/* кнопки все */
+.btn {
+    display: inline-block;
+    height: 50px;
+    border: 2px solid #202229;
+    color: #202229;
+    font-weight: 400;
+    font-size: 1.07142857rem;
+    padding: 0 36px;
+    background: 0 0;
+    text-decoration: none;
+    transition: .1s;
+    text-align: center
+}
+
+.btn:hover {
+    background: #202229;
+    color: #fff
+}
+
+/* кнопка найти */
+.btn.btn-big {
+    height: 60px;
+    font-size: 1rem
+}
+
+.btn.btn-red {
+    background: #e6523a;
+    border: none;
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 600
+}
+
+.btn.btn-red:hover {
+    background: #d6432c
+}
+
+/* кнопки достопримечательности */
+.btn.btn-hashtag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 20px;
+    background: #fff;
+    border: 2px solid #13b9b7;
+    color: #202229
+}
+
+.btn.btn-hashtag:hover {
+    color: #fff;
+    background: #13b9b7
+}
+
+
+/* рейтинги и звездочки */
+.rating-stars,.rating-count {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap
+}
+
+.rating-count {
+    color: #b4b4b6;
+    font-size: 1.07142857rem;
+    margin-top: 5px;
+    margin-left: 5px;
+    position: relative;
+    top: 1px
+}
+
+.rating-content {
+    display: inline-block;
+    position: relative;
+    white-space: nowrap;
+    font-size: 0;
+    margin: 3px 0
+}
+
+.rating-percent {
+    position: relative;
+    padding-right: 18px;
+    padding-left: 5px;
+    margin: 3px 0 -1px;
+    color: #13b9b7;
+    font-size: 1.42857143rem;
+    line-height: 1;
+    font-weight: 400;
+    text-transform: uppercase
+}
+
+.rating-stars-disabled .rating-star {
+    background: url(../img/rating-star-disabled-small.svg) center center no-repeat
+}
+
+.rating-stars-active {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0
+}
+
+.rating-stars-active .rating-star {
+    background: url(../img/rating-star-active-small.svg) center center no-repeat
+}
+
+.rating-star {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 3.5px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat
+}
+
+.rating-large .rating-star {
+    width: 28px;
+    height: 28px
+}
+
+
+
+
+/* поиск */
+.chosen-search-input,.form-control {
+    background-color: #fff;
+    border: none;
+    min-height: 50px;
+    padding: 0 20px;
+    font-size: 1.07142857rem;
+    height: 60px;
+}
+
+.chosen-search-input.control-block,.form-control.control-block {
+    display: block;
+    width: 100%;
+    height: 60px;
+}
+
+
+/* города */
+.cities a:after,.cities a:before,.cities span:after{
+    content: ""
+}
+
+.cities-container {
+    margin-top: 100px
+}
+
+.cities {
+    margin: 33px 0 0;
+    padding: 0
+}
+
+.cities a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    padding: 140px 0;
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 2.85714286rem;
+    font-family: Intro,sans-serif;
+    position: relative;
+    z-index: 0
+}
+
+.cities a:after,.cities a:before {
+    z-index: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top,rgba(0,0,0,.4),rgba(0,0,0,.2));
+    opacity: 1;
+    transition: .2s
+}
+
+.cities a:after {
+    background: #e6523a;
+    opacity: 0
+}
+
+.cities a:hover:before {
+    opacity: 0
+}
+
+.cities a:hover:after {
+    opacity: .7
+}
+
+.cities a:hover span:after {
+    bottom: -25px;
+    margin-left: -25px;
+    width: 50px
+}
+
+.cities span {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    word-wrap: break-word;
+    hyphens: auto;
+    z-index: 1
+}
+
+.cities span:after {
+    transition: .2s;
+    position: absolute;
+    bottom: -20px;
+    width: 0;
+    height: 2px;
+    background: #fff;
+    left: 50%;
+    margin-left: 0
+}
+
+
+
+
+/* экскурсии */
+.excursions-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: 0 -10px;
+    padding: 0;
+    list-style: none
+}
+
+.excursions-item {
+    max-width: 400px
+}
+
+.excursions-list-item {
+    width: 100%;
+    margin: 0;
+    max-width: none;
+    flex: none
+}
+
+.excursions-price{
+    display: inline-block;
+    padding: 14px 25px;
+    margin: 0 0 10px;
+    background: #e6523a;
+    color: #fff;
+    font-weight: 400;
+    line-height: 1.2;
+    font-size: 1.07142857rem
+}
+
+.excursions-list-item {
+    width: 33%;
+    min-width: 320px;
+    max-width: 400px;
+    padding: 0 5px;
+    margin: 0 .33% 0 0;
+    display: flex
+}
+
+.excursions-item {
+    display: block;
+    max-width: 400px;
+    width: 100%;
+    background: #fff;
+    color: #202229;
+    text-decoration: none!important;
+    transition: .1s;
+    margin: 0 auto 30px;
+    position: relative
+}
+
+.excursions-item:hover .excursions-name {
+    color: #e6523a
+}
+
+.excursions-head {
+    position: relative;
+    min-height: 215px;
+    background-color: #c3c5cd
+}
+
+.excursions-img {
+    display: block;
+    background-size: contain;
+}
+
+.excursions-left-pallet,.excursions-right-pallet {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    max-width: 50%
+}
+
+.excursions-title {
+    padding: 18px 25px 170px
+}
+
+.excursions-name {
+    font-size: 1.57142857rem;
+    display: block;
+    letter-spacing: .9px;
+    line-height: 1.2;
+    word-wrap: break-word;
+    font-weight: 500;
+    color: #000
+}
+
+.excursions-location {
+    font-size: 1.07142857rem;
+    color: #000;
+    display: block;
+    margin-top: 10px;
+    letter-spacing: .6px;
+    font-weight: 500
+}
+
+.excursions-footer {
+    padding: 5px 25px 25px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%
+}
+
+.excursions-footer .excursions-type {
+    margin-bottom: 10px
+}
+
+
+.excursions-rate .rating-count {
+    color: #000;
+    font-weight: 500
+}
+
+.excursions-type {
+    font-weight: 500;
+    font-size: 15px
+}
+
+.bunner {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    padding: 1px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    min-height: 650px
+}
+
+.bunner:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 20%;
+    content: "";
+    z-index: 0;
+    background: linear-gradient(to bottom,rgba(0,0,0,.5),rgba(0,0,0,.01))
+}
+
+
+.bunner.home-bunner {
+    background-image: url(../img/home-bunner3.jpeg);
+    min-height: 650px
+}
+
+.bunner-content {
+    padding-bottom: 100px;
+    position: relative;
+    z-index: 1;
+    width: 100%
+}
+
+
+
+.search-form-container {
+    background: rgba(0,0,0,.4);
+    padding: 30px 0 10px
+}
+
+.search .form-label {
+    margin-bottom: 15px
+}
+
+.search-city,.search-type {
+    width: 100%;
+    max-width: 21%
+}
+
+#city_sel{
+    width: 220px;
+}
+
+.search-direction {
+    width: 100%;
+    max-width: 28.4%
+}
+
+.search-from,.search-to {
+    position: relative;
+    width: 100%;
+    min-width: 105px;
+    max-width: 15.3%
+}
+
+.datepicker-e {
+    width: 100%;
+    padding-left: 25px;
+    background-position: right 5px center
+}
+
+.search-from::before,.search-to::before {
+    content: 'От:';
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 3px;
+    font-size: 1.07142857rem;
+    color: #e5e5e7
+}
+
+.search-to::before {
+    content: 'До:'
+}

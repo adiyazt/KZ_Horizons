@@ -1,0 +1,64 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+{% block links %}
+
+<link rel="stylesheet" href="{% static 'styles/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<style>
+    
+    .search-form-container {
+        margin-bottom: 50px;
+        border: 1px solid black;
+        background-image: url('{% static 'img/images/background2.jpg' %}');
+    }
+</style>
+
+<div class="search-form-container" style="margin-bottom: 50px; border: 1px solid black">
+<div class="container">
+<form action="" class="search flex" method="POST">
+    <div>
+    <div class="flex">
+
+        <label class="form-label search-city">
+            <select name="city" id="city_sel" class="form-control form-control-big control-block chosen-search-show" style="width: 220px;">
+                <option value="" disabled selected>Город отправления</option>
+                {% for city in cities %}
+                <option value="{{ city.id }}">{{ city.name }}</option>
+                {% endfor %}
+            </select>
+        </label>
+    </div>
+    </div>
+    <div class="search-btn">
+        <input type="submit" value="Найти" class="btn btn-big btn-red btn-block">
+    </div>
+    {% csrf_token %}
+</form>
+</div></div>
+
+<div class="cities-container">
+    <div class="container">
+<ul class="excursions-list excursions-list-main rating-large" id="excursions-list">
+    {% for attraction in attractions %}
+    <li class="excursions-list-item" style="height: 400px;">
+        <a href="{% url 'attraction' attraction.id %}" class="excursions-item flex direction-column">
+            <div class="flex excursions-head" style="background-image: url('{% static excursion.photo %}'); background-size: 100% 100%">
+            </div>
+
+            <div class="flex j-c-space-between direction-column">
+                <div class="excursions-title">
+                    <span class="excursions-name">{{ attraction.name }}</span>
+                    <span class="excursions-location">{{ attraction.city.name }}</span>
+                </div>
+            </div>
+
+
+        </a>
+    </li>
+    {% endfor %}
+
+</ul>
+{% endblock %}            
+          

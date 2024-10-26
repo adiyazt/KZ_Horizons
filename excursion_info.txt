@@ -1,0 +1,18 @@
+-----------User----------
+Email: ayhvdcyd@mail.ru
+Phone: +77755874437
+
+
+---------Excursion--------
+Excursion Name: Лесная жизнь
+City: Бурабай
+Type: Групповая
+Kind: Экотуризм
+People Number: 20
+Duration: 2 hours
+Guide: Адия Изтолеу
+Transport: 1
+Price: 20 euro
+Program: гвтрисоиврлмиыд
+Attractions: Байтерек
+Date: 2024-06-13 19:24:00+00:00

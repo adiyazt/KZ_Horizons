@@ -1,0 +1,45 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+
+{% block links %}
+<link rel="stylesheet" href="{% static 'styles/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="attractions-container">
+    <div class="container">
+        <h2>Attractions</h2>
+        <form id="attractions-form" onsubmit="getSelectedAttractions(event)" method="POST">
+            <div style="display: flex; flex-wrap: wrap;">
+                {% for attraction in attractions %}
+                <div class="attraction-item" style="margin: 10px; text-align: center;">
+                    <input type="checkbox" id="attraction-{{ attraction.id }}" name="attractions" value="{{ attraction.id }}">
+                    <label for="attraction-{{ attraction.id }}">
+                        <div style="background-image: url('{% static attraction.photo %}'); background-size: cover; width: 100px; height: 100px;"></div>
+                        <p>{{ attraction.name }}</p>
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+            <input type="text" id="chosens" name="attractions" hidden>
+            <input type="text" name="excursion_id" hidden value="{{excursion_id}}">
+            <input type="submit" value="Добавить">
+            {% csrf_token %}
+        </form>
+    </div>
+</div>
+
+<script>
+    function getSelectedAttractions(event) {
+        event.preventDefault(); 
+        var form = document.getElementById('attractions-form');
+        var formData = new FormData(form);
+        var selectedAttractions = formData.getAll('attractions');
+        var chosens = selectedAttractions.join(',');
+        document.getElementById('chosens').value = chosens;
+        console.log('Selected Attraction IDs:', chosens);
+
+        form.submit();
+    }
+</script>
+{% endblock %}
